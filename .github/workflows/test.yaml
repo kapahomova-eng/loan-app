@@ -9,9 +9,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      URL: ${{ secrets.SERVICE_URL }}
-      USERNAME: ${{ secrets.TEST_USERNAME }}
-      PASSWORD: ${{ secrets.TEST_PASSWORD }}
+      URL: ${{ secrets.URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
