@@ -14,7 +14,11 @@ export class LoanPage {
     readonly passwordInput: Locator;
     readonly continueButton: Locator;
     readonly monthlyAmountText: Locator;
-    readonly appyLoanButton2: Locator;
+    readonly applyLoanButton1: Locator;
+    readonly applyLoanButton2: Locator;
+    readonly closeButton: Locator;
+    readonly fieldError: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
@@ -26,7 +30,10 @@ export class LoanPage {
         this.passwordInput = page.getByTestId('login-popup-password-input');
         this.monthlyAmountText = page.getByTestId("ib-small-loan-calculator-field-monthlyPayment");
         this.continueButton = page.getByTestId('login-popup-continue-button');
-        this.appyLoanButton2 = page.getByTestId('id-image-element-button-image-2')
+        this.applyLoanButton2 = page.getByTestId('id-image-element-button-image-2')
+        this.applyLoanButton1 = page.getByTestId('id-image-element-button-image-1')
+        this.closeButton = page.getByTestId('login-popup-close-button')
+        this.fieldError = page.getByTestId('id-small-loan-calculator-field-error')
     }
 
     async openLoanPage() {
@@ -41,5 +48,12 @@ export class LoanPage {
         await this.usernameInput.fill(this.username)
         await this.passwordInput.fill(this.password)
         await this.continueButton.click()
+    }
+    async clickRedirectButton1() {
+        await this.applyLoanButton1.click();
+    }
+
+    async clickRedirectButton2() {
+        await this.applyLoanButton2.click();
     }
 }
