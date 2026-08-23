@@ -56,4 +56,60 @@ export class LoanPage {
     async clickRedirectButton2() {
         await this.applyLoanButton2.click();
     }
+    async closeLoginPopupByMouse() {
+        const textBox = await this.closeButton.evaluate((el) => {
+            const range = document.createRange()
+            range.selectNodeContents(el)
+
+            return range.getBoundingClientRect().toJSON()
+        })
+
+        await this.page.mouse.click(
+            textBox.x + textBox.width / 2,
+            textBox.y + textBox.height / 2
+        )
+    }
+    async fillLoanAmount(amount: string) {
+        await this.amountInput.fill(amount)
+    }
+
+    async fillLoanAmountRange(amount: string) {
+        await this.amountInputRange.fill(amount)
+    }
+
+    async waitForMonthlyAmount() {
+        await this.monthlyAmountText.waitFor({
+            state: 'visible',
+            timeout: 5000
+        })
+    }
+
+    async clickApplyButton() {
+        await this.applyButton.click()
+    }
+
+    async calculateLoan(amount: string, period: string) {
+        await this.fillLoanAmount(amount)
+        await this.setPeriodOption(period)
+        await this.waitForMonthlyAmount()
+    }
+
+    async calculateLoanAndWaitForRequest(amount: string, period: string) {
+        await this.fillLoanAmount(amount)
+        await this.setPeriodOption(period)
+
+        await this.page.waitForRequest(
+            `**/api/loan-calc?amount=${amount}&period=${period}`
+        )
+
+        await this.waitForMonthlyAmount()
+    }
+
+    async scrollApplyButtonIntoView() {
+        await this.applyLoanButton2.scrollIntoViewIfNeeded()
+    }
+    async fillLoanData(amount: string, period: string) {
+        await this.amountInput.fill(amount)
+        await this.periodSelect.selectOption(period)
+    }
 }

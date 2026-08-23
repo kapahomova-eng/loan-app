@@ -21,4 +21,8 @@ export class LoanResultPage {
         this.continueButton1 = page.getByTestId('final-page-continue-button');
         this.okButton = page.getByTestId('final-page-success-ok-button');
         this.successMessage = page.getByText('Success!');
-}}
+}
+    async getMonthlyPayment() {
+        return await this.finalMonthlyPayment.textContent()
+    }
+}
